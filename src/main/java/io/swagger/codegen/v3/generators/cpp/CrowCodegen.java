@@ -56,7 +56,7 @@ public class CrowCodegen extends AbstractCppCodegen {
         apiTemplateFiles.put("api-impl-source.mustache", ".cpp");
         apiTemplateFiles.put("main-api-server.mustache", ".cpp");
 
-        embeddedTemplateDir = templateDir = "pistache-server";
+        embeddedTemplateDir = templateDir = "crow";
 
         cliOptions.clear();
 
@@ -231,15 +231,15 @@ public class CrowCodegen extends AbstractCppCodegen {
         String result = super.apiFilename(templateName, tag);
 
         if ( templateName.endsWith("impl-header.mustache") ) {
-            int ix = result.lastIndexOf('/');
+            int ix = result.lastIndexOf('/') == -1 ? result.lastIndexOf('\\') : result.lastIndexOf('/');
             result = result.substring(0, ix) + result.substring(ix, result.length() - 2) + "Impl.h";
             result = result.replace(apiFileFolder(), implFileFolder());
         } else if ( templateName.endsWith("impl-source.mustache") ) {
-            int ix = result.lastIndexOf('/');
+            int ix = result.lastIndexOf('/') == -1 ? result.lastIndexOf('\\') : result.lastIndexOf('/');
             result = result.substring(0, ix) + result.substring(ix, result.length() - 4) + "Impl.cpp";
             result = result.replace(apiFileFolder(), implFileFolder());
         } else if ( templateName.endsWith("api-server.mustache") ) {
-            int ix = result.lastIndexOf('/');
+            int ix = result.lastIndexOf('/') == -1 ? result.lastIndexOf('\\') : result.lastIndexOf('/');
             result = result.substring(0, ix) + result.substring(ix, result.length() - 4) + "MainServer.cpp";
             result = result.replace(apiFileFolder(), outputFolder);
         }
